@@ -11,4 +11,4 @@ deep-learning-workspace/
 ├── labs/
 │   └── weekly lab work
 ├── README.md
-└── .gitignore
+└── .gitignore# deep-learning-workspace
