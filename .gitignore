@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data / large files
+*.zip
+*.tar
+*.gz
+*.h5
+*.pt
+*.pth
+*.pkl
+*.joblib
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
