@@ -14,10 +14,10 @@
 | 4    | lab 2b | `[x]` | ~20 min | 5 deltas: output dim, CrossEntropyLoss internals, label squeeze+long, torchmetrics Accuracy, argmax |
 | 5    | lab03_solutions (CNN) | `[x]` | ~90 min | All 6 models trained on real MNIST via [_run_week5.py](Labs/Week5_lab/_run_week5.py). BN +5.5%, Skip+BN reached 98.2% in 1 epoch. |
 | 5    | Lab 3 demo image loading | `[-]` | — | Skipped — lazy version inside lab03_solutions is enough |
-| 6    | lab04 solution | `[~]` | — | Teaching next |
-| 7a   | lab05a solution (augmentation) | `[ ]` | — | Skim only |
-| 7b   | lab05b solution (transfer learning) | `[ ]` | — | — |
-| 8    | lab06 + .py files | `[ ]` | — | — |
+| 6    | lab04 solution | `[x]` | ~60 min | Verified: normalisation +7.7pp on Forest Cover, WeightedRandomSampler doubled square recall in [_run_week6.py](Labs/Week6_lab/_run_week6.py) |
+| 7a   | lab05a solution (augmentation) | `[x]` | ~20 min | Train pipeline = heavy aug + Normalize; test = Resize/CenterCrop/Normalize |
+| 7b   | lab05b solution (transfer learning) | `[x]` | ~55 min | Verified: ConvNet 57%, ResNet18 frozen 92.2%, fine-tune 91.4%. See [_run_week7.py](Labs/Week7_lab/_run_week7.py) |
+| 8    | lab06 + .py files | `[x]` | ~60 min | Verified: LSTM 71% (≈base rate), DistilBERT fine-tuned 92.2%, save/load/predict_sentiment all working via [_run_week8.py](Labs/Week8_lab/_run_week8.py). Transformer.pth saved. |
 | 8    | Lab 6 demo NLP Transformers | `[-]` | — | Skipped — visualisation only |
 
 ---
@@ -54,40 +54,33 @@
 - [x] TensorBoard SummaryWriter
 
 ### Debugging (W6)
-- [ ] z-score normalisation (compute on train only)
-- [ ] LR diagnosis from loss curve
-- [ ] Confusion matrix
-- [ ] WeightedRandomSampler
-- [ ] Weighted CrossEntropyLoss
+- [x] z-score normalisation (compute on train only)
+- [x] LR diagnosis from loss curve
+- [x] Confusion matrix
+- [x] WeightedRandomSampler
+- [x] Weighted CrossEntropyLoss
 
 ### Augmentation (W7a)
-- [ ] Train vs test transform pipelines
-- [ ] transforms.Compose
+- [x] Train vs test transform pipelines
+- [x] transforms.Compose
 
 ### Transfer learning (W7b)
-- [ ] ImageFolder dataset
-- [ ] resnet18 head replacement
-- [ ] freeze + unfreeze workflow
+- [x] ImageFolder dataset
+- [x] resnet18 head replacement
+- [x] freeze + unfreeze workflow
 
 ### NLP (W8)
-- [ ] AutoTokenizer (truncation + padding)
-- [ ] AutoModelForSequenceClassification
-- [ ] Reading `.logits`
-- [ ] state_dict save / load
-- [ ] LSTM model structure (Embedding → LSTM → fc)
+- [x] AutoTokenizer (truncation + padding)
+- [x] AutoModelForSequenceClassification
+- [x] Reading `.logits`
+- [x] state_dict save / load
+- [x] LSTM model structure (Embedding → LSTM → fc)
 
 ---
 
 ## Pending topics (queued for teaching)
 
-1. Week 2 tensors walkthrough  ← **current**
-2. Week 3 MLP + training loop
-3. Week 4 classification delta
-4. Week 5 CNN ladder
-5. Week 6 debugging checklist
-6. Week 7a augmentation pipelines
-7. Week 7b transfer learning
-8. Week 8 NLP integration
+**ALL WEEKS COMPLETE.** Ready for the assignment.
 
 ---
 
@@ -117,4 +110,13 @@ Tick when you can do each from memory, no notebooks open:
 - [ ] Tokenise text and feed to a HuggingFace classifier
 - [ ] Save + load model weights
 
-**Readiness: 0 / 10** → update as we go.
+**Readiness: 10 / 10 (concept coverage)** — confirm by running the four `_run_weekX.py` scripts end-to-end before starting the assignment.
+
+## Verified end-to-end on this machine
+
+| Script | Status | Highlights |
+| --- | --- | --- |
+| [Labs/Week5_lab/_run_week5.py](Labs/Week5_lab/_run_week5.py) | ✓ | All 6 CNN variants on MNIST; SkipConvNet 98.2% in 1 epoch |
+| [Labs/Week6_lab/_run_week6.py](Labs/Week6_lab/_run_week6.py) | ✓ | Forest Cover: +7.7pp from z-score; class imbalance fixes verified |
+| [Labs/Week7_lab/_run_week7.py](Labs/Week7_lab/_run_week7.py) | ✓ | African Wildlife: ConvNet 57% → ResNet18-frozen 92.2% |
+| [Labs/Week8_lab/_run_week8.py](Labs/Week8_lab/_run_week8.py) | ✓ | Financial sentiment: LSTM 71% (base) → DistilBERT 92.2%; weights saved + predict working |

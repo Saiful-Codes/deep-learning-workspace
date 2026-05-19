@@ -120,3 +120,25 @@ htmlcov/
 # Dataset
 # =========================
 data/
+
+# =========================
+# Teaching-session generated artefacts (Weeks 2-8)
+# =========================
+# Underscore-prefixed directories created by the lab companion scripts
+# (downloaded datasets, MNIST cache, wildlife images, transformer weights, etc.)
+**/_mnist_data/
+**/_w[0-9]_data/
+**/_w[0-9][0-9]_data/
+
+# Companion runnable scripts produced during the guided study session
+Labs/**/_run_week*.py
+
+# Saved model checkpoints written by the Week 8 NLP runner
+Labs/Week8_lab/model_weights/
+
+# Book-generation toolchain (DOCX builder source files)
+_book/
+
+# Generated learning companion DOCX (rebuildable from _book/)
+Deep Learning Labs - Complete Learning Companion.docx
+*.docx
