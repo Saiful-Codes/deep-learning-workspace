@@ -1,26 +1,146 @@
+# =========================
 # Python
+# =========================
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
 .venv/
+.venv311/
 venv/
 env/
+ENV/
+.env
+.env.*
 
-# Jupyter
+# =========================
+# Jupyter / IPython
+# =========================
 .ipynb_checkpoints/
+*.ipynb_checkpoints
+profile_default/
+ipython_config.py
+.jupyter/
 
-# Data / large files
-*.zip
-*.tar
-*.gz
-*.h5
+# =========================
+# Deep learning artifacts
+# =========================
+# Model checkpoints / weights
 *.pt
 *.pth
-*.pkl
-*.joblib
+*.ckpt
+*.safetensors
+*.onnx
+*.h5
+*.hdf5
+*.pb
+*.tflite
+*.bin
 
-# System files
+# Serialized objects
+*.pkl
+*.pickle
+*.joblib
+*.npy
+*.npz
+
+# Training output directories
+checkpoints/
+runs/
+outputs/
+lightning_logs/
+mlruns/
+wandb/
+tb_logs/
+tensorboard/
+
+# Datasets / large files (ignore archives; commit raw data deliberately)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+*.7z
+*.rar
+
+# =========================
+# Logs & temporary outputs
+# =========================
+*.log
+logs/
+tmp/
+temp/
+.cache/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =========================
+# OS junk
+# =========================
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 
-# IDE
-.vscode/
+# =========================
+# Testing / coverage
+# =========================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# =========================
+# Claude Artifacts
+# =========================
+.claude/
+Assessment/assessment_plan.md
+Assessment/assessment-goal-summary.md
+Assessment/assessment-progress.md
+# =========================
+# Dataset
+# =========================
+data/
+
+# =========================
+# Teaching-session generated artefacts (Weeks 2-8)
+# =========================
+# Underscore-prefixed directories created by the lab companion scripts
+# (downloaded datasets, MNIST cache, wildlife images, transformer weights, etc.)
+**/_mnist_data/
+**/_w[0-9]_data/
+**/_w[0-9][0-9]_data/
+
+# Companion runnable scripts produced during the guided study session
+Labs/**/_run_week*.py
+
+# Saved model checkpoints written by the Week 8 NLP runner
+Labs/Week8_lab/model_weights/
+
+# Book-generation toolchain (DOCX builder source files)
+_book/
+
+# Generated learning companion DOCX (rebuildable from _book/)
+Deep Learning Labs - Complete Learning Companion.docx
+*.docx
