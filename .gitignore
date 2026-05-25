@@ -115,6 +115,8 @@ htmlcov/
 # Claude Artifacts
 # =========================
 .claude/
+Assessment/assessment_plan.md
+Assessment/assessment-goal-summary.md
 
 # =========================
 # Dataset
