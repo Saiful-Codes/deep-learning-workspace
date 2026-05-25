@@ -8,24 +8,49 @@ import torch
 import torchvision.transforms as transforms
 from PIL import Image
 
-# TODO Task 1b - Implement LesionDataset
-#        You must implement the __init__, __len__ and __getitem__ methods.
+# Task 1b - LesionDataset
+#   Lazy-loading image dataset for the skin-lesion data.
+#   The label CSV has 8 columns: image id + 7 one-hot class columns.
+#   Only the file names are read in __init__; each image is opened on demand
+#   in __getitem__ so the whole dataset never has to fit in memory.
 #
-#        The __init__ function should have the following prototype
-#          def __init__(self, img_dir, labels_fname):
-#            - img_dir is the directory path with all the image files
-#            - labels_fname is the csv file with image ids and their 
-#              corresponding labels
-#
-#        Note: You should not open all the image files in your __init__.
-#              Instead, just read in all the file names into a list and
-#              open the required image file in the __getitem__ function.
-#              This prevents the machine from running out of memory.
-#
-# TODO Task 1e - Add augment flag to LesionDataset, so the __init__ function
-#                now look like this:
-#                   def __init__(self, img_dir, labels_fname, augment=False):
-#
+# Task 1e - `augment` flag. When True (training set only) a non-deterministic
+#   augmentation pipeline is applied; when False (val/test) only a plain
+#   Resize + ToTensor is used.
+
 
 class LesionDataset(torch.utils.data.Dataset):
-    pass
+    def __init__(self, img_dir, labels_fname, augment=False):
+        df = pd.read_csv(labels_fname)
+        self.img_dir = Path(img_dir)
+        # Store only the file ids now; open the actual images lazily later.
+        self.image_ids = df['image'].tolist()
+        # One-hot (cols 1..7) -> integer class index, matching IMG_CLASS_NAMES order.
+        self.labels = df.iloc[:, 1:].values.argmax(axis=1).astype('int64')
+
+        if augment:
+            # Training augmentation: random crop + flips + rotation + colour jitter.
+            self.transform = transforms.Compose([
+                transforms.Resize((232, 232)),
+                transforms.RandomCrop(224),
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomVerticalFlip(),
+                transforms.RandomRotation(20),
+                transforms.ColorJitter(brightness=0.2, contrast=0.2,
+                                       saturation=0.1, hue=0.02),
+                transforms.ToTensor(),
+            ])
+        else:
+            # Deterministic pipeline for validation / test.
+            self.transform = transforms.Compose([
+                transforms.Resize((224, 224)),
+                transforms.ToTensor(),
+            ])
+
+    def __len__(self):
+        return len(self.image_ids)
+
+    def __getitem__(self, idx):
+        img_path = self.img_dir / f"{self.image_ids[idx]}.jpg"
+        img = Image.open(img_path).convert('RGB')
+        return self.transform(img), int(self.labels[idx])
