@@ -145,3 +145,4 @@ _book/
 Deep Learning Labs - Complete Learning Companion.docx
 *.docx
 ~WRL0005.tmp
+logs/
