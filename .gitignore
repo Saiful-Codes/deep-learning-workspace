@@ -144,3 +144,4 @@ _book/
 # Generated learning companion DOCX (rebuildable from _book/)
 Deep Learning Labs - Complete Learning Companion.docx
 *.docx
+~WRL0005.tmp
