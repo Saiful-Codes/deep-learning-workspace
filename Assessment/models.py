@@ -34,17 +34,46 @@ class SimpleBNConv(nn.Module):
         return x
 
 
+class CustomCNN(nn.Module):
+    def __init__(self, num_classes=7, dropout=0.5):
+        super().__init__()
+
+        def conv_block(in_channels, out_channels):
+            return nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
+                nn.BatchNorm2d(out_channels),
+                nn.ReLU(),
+                nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1),
+                nn.BatchNorm2d(out_channels),
+                nn.ReLU(),
+                nn.MaxPool2d(kernel_size=2)
+            )
+
+        self.features = nn.Sequential(
+            conv_block(3, 32),      # 224 -> 112
+            conv_block(32, 64),     # 112 -> 56
+            conv_block(64, 128),    # 56 -> 28
+            conv_block(128, 128),   # 28 -> 14
+        )
+
+        self.pool = nn.AdaptiveAvgPool2d((1, 1))
+
+        self.classifier = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(64, num_classes)
+        )
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.pool(x)
+        x = self.classifier(x)
+        return x
+
+
 def build_resnet18(num_classes=7, freeze=True):
-    """
-    Build a pretrained ResNet18 model for 7-class lesion classification.
-
-    If freeze=True:
-        freeze all pretrained feature layers and train only the final layer.
-
-    If freeze=False:
-        fine-tune all layers.
-    """
-
     model = tv_models.resnet18(weights=tv_models.ResNet18_Weights.IMAGENET1K_V1)
 
     if freeze:
@@ -56,7 +85,20 @@ def build_resnet18(num_classes=7, freeze=True):
     return model
 
 
-# TODO Task 1g - Create your own models
+def build_resnet18_enhanced(num_classes=7, freeze=False, dropout=0.5):
+    model = tv_models.resnet18(weights=tv_models.ResNet18_Weights.IMAGENET1K_V1)
 
+    if freeze:
+        for param in model.parameters():
+            param.requires_grad = False
 
+    in_features = model.fc.in_features
 
+    model.fc = nn.Sequential(
+        nn.Linear(in_features, 256),
+        nn.ReLU(),
+        nn.Dropout(dropout),
+        nn.Linear(256, num_classes)
+    )
+
+    return model

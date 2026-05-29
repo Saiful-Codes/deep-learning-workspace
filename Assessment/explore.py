@@ -20,4 +20,3 @@ def plot_label_distribution(labels, split, class_names):
     plt.xlabel('Class')
     plt.ylabel('Num examples')
     plt.show()
-

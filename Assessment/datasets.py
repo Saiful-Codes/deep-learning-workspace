@@ -37,6 +37,9 @@ class LesionDataset(torch.utils.data.Dataset):
             std=[0.229, 0.224, 0.225]
         )
 
+        # Identity transform replacement
+        no_norm = transforms.Lambda(lambda x: x)
+
         # Base transforms
         base_transforms = [
             transforms.Resize((224, 224)),
@@ -58,7 +61,7 @@ class LesionDataset(torch.utils.data.Dataset):
                 transforms.Resize((224, 224)),
                 transforms.RandomHorizontalFlip(p=0.5),
                 transforms.ToTensor(),
-                imagenet_norm if pretrained else transforms.Identity()
+                imagenet_norm if pretrained else no_norm
             ])
 
         # Rotation only
@@ -68,7 +71,7 @@ class LesionDataset(torch.utils.data.Dataset):
                 transforms.Resize((224, 224)),
                 transforms.RandomRotation(degrees=20),
                 transforms.ToTensor(),
-                imagenet_norm if pretrained else transforms.Identity()
+                imagenet_norm if pretrained else no_norm
             ])
 
         # ColorJitter only
@@ -83,7 +86,7 @@ class LesionDataset(torch.utils.data.Dataset):
                     hue=0.05
                 ),
                 transforms.ToTensor(),
-                imagenet_norm if pretrained else transforms.Identity()
+                imagenet_norm if pretrained else no_norm
             ])
 
         # Full augmentation pipeline
@@ -104,7 +107,7 @@ class LesionDataset(torch.utils.data.Dataset):
                     scale=(0.8, 1.0)
                 ),
                 transforms.ToTensor(),
-                imagenet_norm if pretrained else transforms.Identity()
+                imagenet_norm if pretrained else no_norm
             ])
 
         else:
